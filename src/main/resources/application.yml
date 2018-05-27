@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:sqlite::resource:chatdb.db
+    username:
+    password:
+    driver-class-name: org.sqlite.JDBC
+
+
+mybatis:
+  typeAliasesPackage: org.spring.springboot.domain
+  mapperLocations: classpath:mapper/*.xml

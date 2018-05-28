@@ -4,9 +4,9 @@ CREATE TABLE IF not EXISTS chat_settings (
 
 CREATE TABLE IF NOT EXISTS chat_users ( 
     id          INTEGER         PRIMARY KEY AUTOINCREMENT,
-    username    VARCHAR(150)    NOT NULL UNIQUE,
+    username    VARCHAR(150)    NOT NULL unique,
     passwd      BOOLEAN         NOT NULL,
-    signUpDate  DATETIME        NOT NULL,
+--    signUpDate  DATETIME        NOT NULL,
     setting     INTEGER         NOT NULL,
     FOREIGN KEY(setting) REFERENCES chat_settings
 );
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS room_user (
     FOREIGN KEY(user) REFERENCES chat_users
 );
 
-CREATE TABLE IF NOT EXISTS chat_relations (
+CREATE TABLE IF NOT EXISTS double_chats (
     id          INTEGER         PRIMARY KEY AUTOINCREMENT,
     user1       INTEGER         NOT NULL,
     user2       INTEGER         NOT NULL,
@@ -39,14 +39,15 @@ CREATE TABLE IF NOT EXISTS records_room (
     room        INTEGER         NOT NULL,
     user        INTEGER         NOT NULL,
     msg         TEXT            NOT NULL,
+    stamp       DATETIME        NOT NULL,
     FOREIGN KEY(room) REFERENCES chat_rooms,
     FOREIGN KEY(user) REFERENCES chat_users
 );
 
-CREATE TABLE IF NOT EXISTS records_relation (
+CREATE TABLE IF NOT EXISTS records_double (
     id          INTEGER         PRIMARY KEY AUTOINCREMENT,
-    relation    INTEGER         NOT NULL,
+    channel     INTEGER         NOT NULL,
     msg         TEXT            NOT NULL,
-    sendtime    DATETIME        NOT NULL,
-    FOREIGN KEY(relation) REFERENCES chat_relations
+    stamp       DATETIME        NOT NULL,
+    FOREIGN KEY(channel) REFERENCES double_chats
 );

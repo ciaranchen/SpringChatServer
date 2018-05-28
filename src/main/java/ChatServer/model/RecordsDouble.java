@@ -1,16 +1,18 @@
 package ChatServer.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class RecordsRelation implements Serializable {
+public class RecordsDouble implements Serializable {
     private Long id;
-    private ChatRelations channel;
+    private ChatDoubles channel;
     private String msg;
+    private Date stamp;
 
-    public RecordsRelation() {
+    public RecordsDouble() {
     }
 
-    public RecordsRelation(ChatRelations channel, String msg) {
+    public RecordsDouble(ChatDoubles channel, String msg) {
         this.channel = channel;
         this.msg = msg;
     }
@@ -23,11 +25,11 @@ public class RecordsRelation implements Serializable {
         this.id = id;
     }
 
-    public ChatRelations getChannel() {
+    public ChatDoubles getChannel() {
         return channel;
     }
 
-    public void setChannel(ChatRelations channel) {
+    public void setChannel(ChatDoubles channel) {
         this.channel = channel;
     }
 
@@ -37,5 +39,13 @@ public class RecordsRelation implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Date getStamp() {
+        return stamp;
+    }
+
+    public void setStamp(Date stamp) {
+        this.stamp = stamp;
     }
 }

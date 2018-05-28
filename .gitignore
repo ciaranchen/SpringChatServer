@@ -3,7 +3,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
@@ -28,3 +28,7 @@ gradle
 
 # about platform
 .DS_Store
+
+# generate file
+sqlScripts/fack_data.sql
+chatdb.db

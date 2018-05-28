@@ -3,23 +3,23 @@ package ChatServer.model;
 import java.io.Serializable;
 
 public class RoomUser implements Serializable {
-    private Long id;
+    private java.lang.Long id;
     private ChatRooms room;
-    private ChatUsers user;
+    private Long user;
 
     public RoomUser() {
     }
 
-    public RoomUser(ChatRooms room, ChatUsers user) {
+    public RoomUser(ChatRooms room, Long user) {
         this.room = room;
         this.user = user;
     }
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
 
@@ -31,11 +31,11 @@ public class RoomUser implements Serializable {
         this.room = room;
     }
 
-    public ChatUsers getUser() {
+    public Long getUser() {
         return user;
     }
 
-    public void setUser(ChatUsers user) {
+    public void setUser(Long user) {
         this.user = user;
     }
 }

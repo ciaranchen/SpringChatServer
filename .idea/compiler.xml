@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="SpringChatServer_main" target="1.8" />
+      <module name="SpringChatServer_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="HaskellBuildOptions">
+    <ghcPath>D:\Haskell\bin\ghc.exe</ghcPath>
+    <cabalPath>D:\Haskell\lib\extralibs\bin\cabal.exe</cabalPath>
+    <stackPath>D:\Haskell\bin\stack.exe</stackPath>
+  </component>
+</project>

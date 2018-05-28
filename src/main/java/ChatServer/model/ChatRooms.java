@@ -4,15 +4,24 @@ import java.io.Serializable;
 
 public class ChatRooms implements Serializable {
     private Long id;
+    private Long owner;
     private String name;
-    private ChatUsers owner;
 
 
     // ============= Generic function ===================
 
-    public ChatRooms(String name, ChatUsers owner) {
+    public ChatRooms(Long id, Long owner, String name) {
+        this.id = id;
+        this.owner = owner;
+        this.name = name;
+    }
+
+    public ChatRooms(String name, Long owner) {
         this.name = name;
         this.owner = owner;
+    }
+
+    public ChatRooms() {
     }
 
     public Long getId() {
@@ -31,11 +40,11 @@ public class ChatRooms implements Serializable {
         this.name = name;
     }
 
-    public ChatUsers getOwner() {
+    public Long getOwner() {
         return owner;
     }
 
-    public void setOwner(ChatUsers owner) {
+    public void setOwner(Long owner) {
         this.owner = owner;
     }
 }

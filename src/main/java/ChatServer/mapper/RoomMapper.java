@@ -1,6 +1,5 @@
 package ChatServer.mapper;
 
-import ChatServer.model.ChatUsers;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -10,5 +9,5 @@ public interface RoomMapper {
     @Results(
             @Result(property = "name", column = "name")
     )
-    ChatUsers searchById(Long id);
+    Long searchById(java.lang.Long id);
 }

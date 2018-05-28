@@ -1,16 +1,16 @@
-package ChatServer.model;
+package ChatServer.Entity;
 
 import java.io.Serializable;
 
-public class ChatUserBaseInfo implements Serializable {
+public class ChatUsersEntity implements Serializable {
     private Long id;
     private String username;
 
-    public ChatUserBaseInfo(String username) {
+    public ChatUsersEntity(String username) {
         this.username = username;
     }
 
-    public ChatUserBaseInfo() {
+    public ChatUsersEntity() {
     }
 
     public Long getId() {

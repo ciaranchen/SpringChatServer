@@ -20,6 +20,7 @@ bin
 .mvn
 .gradle
 gradle
+out
 
 # about IDE
 .idea

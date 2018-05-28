@@ -24,10 +24,7 @@ public class DoubleChatController {
     @MessageMapping("/send")
     public void doubleChatMessage(DoubleChatMsg msg) throws Exception {
         System.out.println(msg);
-        // save this msg to database;
-
+        // todo: save this msg to database;
         simpMessagingTemplate.convertAndSend("/recv/" + msg.getTo(), msg);
     }
-
-
 }

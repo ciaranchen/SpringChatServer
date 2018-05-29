@@ -11,7 +11,7 @@ function send_echo() {
   stomp.connect({username: 'ciaran'}, "qweasd", function (frame) {
     console.log('Connected: ' + frame);
     stomp.subscribe('/recv/2', function (g) {
-        writeToScreen('recv: ' + JSON.parse(g.body).from);
+        writeToScreen('recv: ' + g.body);
     });
     stomp.send("/send", {}, JSON.stringify({'from': 1, 'to': 2, 'content': "qwertasdfg"}));
   });

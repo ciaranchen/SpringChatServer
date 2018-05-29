@@ -67,6 +67,11 @@
 
     [{"id":2,"username":"user2"},{"id":4,"username":"user4"},{"id":6,"username":"user6"},{"id":8,"username":"user8"},{"id":10,"username":"user10"}]
 
+
+
+
+
+
 ## 私聊相关API
 
 ### 1. 发送消息

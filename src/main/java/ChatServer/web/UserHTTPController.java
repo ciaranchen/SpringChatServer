@@ -32,4 +32,10 @@ public class UserHTTPController {
     public List<ChatRooms> queryRoom(@RequestParam(value="user") Long id) {
         return userMapper.queryRoom(id);
     }
+
+    @RequestMapping("/http/user/addFriend")
+    public int addFriend() {
+        // todo: insert record to double chat.
+        return 0;
+    }
 }

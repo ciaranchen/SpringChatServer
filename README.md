@@ -10,8 +10,8 @@ SSM 框架 Java聊天后端
 
 ```shell
 sqlite3 src/main/resources/chatdb.db < sqlScripts/create_tables.sql
-python3 sqlScripts/fack_data.py > sqlScripts/fack_data.sql
-sqlite3 src/main/resources/chatdb.db < sqlScripts/fack_data.sql
+python3 sqlScripts/fake_data.py > sqlScripts/fake_data.sql
+sqlite3 src/main/resources/chatdb.db < sqlScripts/fake_data.sql
 ```
 
 ## 使用gradle来启动项目
@@ -22,3 +22,8 @@ sqlite3 src/main/resources/chatdb.db < sqlScripts/fack_data.sql
 
 通过使用`sqlScripts`文件夹下的脚本`drop_tables.sql`清空数据库
 
+```shell
+sqlite3 src/main/resources/chatdb.db < sqlScripts/drop_tables.sql
+```
+
+## 一些说明

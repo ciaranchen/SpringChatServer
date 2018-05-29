@@ -31,5 +31,5 @@ out
 .DS_Store
 
 # generate file
-sqlScripts/fack_data.sql
+sqlScripts/fake_data.sql
 chatdb.db

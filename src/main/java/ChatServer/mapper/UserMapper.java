@@ -37,20 +37,22 @@ public interface UserMapper {
 //    @Delete("DELETE FROM users WHERE id =#{id}")
 //    void delete(Long id);
 
-    @Select("SELECT id FROM chat_users WHERE username=#{username} and passwd=#{passwd}")
+    @Select("SELECT id FROM chat_users WHERE username=#{username} and password=#{password}")
     @Results({
             @Result(property = "id", column = "id")
     })
-    Long login(@Param("username") String username, @Param("passwd") String passwd);
+    Long login(@Param("username") String username, @Param("password") String password);
 
-    @Select("SELECT user2, c2.username FROM chat_users as c1 LEFT OUTER JOIN double_chats ON user1=c1.id LEFT OUTER JOIN chat_users as c2 ON c2.id = user2 where c1.id=#{id}")
+
+//    select t.id as channel_id, uid, username from (select id, user2 as uid from double_chats where user1 = 1 union select id, user1 as uid from double_chats where user2 = 1) as t left outer join chat_users as c on c.id = uid;
+    @Select("SELECT user2, username FROM double_chats LEFT OUTER JOIN chat_users as c2 ON c2.id = user2 where user1 = #{id}")
     @Results({
             @Result(property = "id", column = "user2"),
             @Result(property = "username", column = "username")
     })
     List<ChatUsersEntity> queryRelationship(Long id);
 
-    @Select("SELECT chat_rooms.id, name, owner FROM chat_users LEFT OUTER JOIN room_user ON user=chat_users.id LEFT OUTER JOIN chat_rooms ON room = chat_rooms.id where chat_users.id = #{id}")
+    @Select("SELECT chat_rooms.id, name, owner FROM room_user LEFT OUTER JOIN chat_rooms ON room = chat_rooms.id WHERE user=#{id}")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),

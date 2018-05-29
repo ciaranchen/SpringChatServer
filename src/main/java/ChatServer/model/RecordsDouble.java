@@ -15,6 +15,8 @@ public class RecordsDouble implements Serializable {
     public RecordsDouble(ChatDoubles channel, String msg) {
         this.channel = channel;
         this.msg = msg;
+        this.stamp = new Date();
+        System.out.println(stamp);
     }
 
     public Long getId() {

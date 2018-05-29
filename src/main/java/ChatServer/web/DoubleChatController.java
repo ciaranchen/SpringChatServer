@@ -2,6 +2,9 @@ package ChatServer.web;
 
 import ChatServer.mapper.RecordsDoubleMapper;
 import ChatServer.message.DoubleChatMsg;
+import ChatServer.model.RecordsDouble;
+import ChatServer.util.MyBatisUtil;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -25,6 +28,12 @@ public class DoubleChatController {
     public void doubleChatMessage(DoubleChatMsg msg) throws Exception {
         System.out.println(msg);
         // todo: save this msg to database;
+        // todo: save this msg to database;
+//        SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
+        RecordsDouble recordsDouble = new RecordsDouble();
+        recordsDoubleMapper.insertRecord(recordsDouble);
+
+
         simpMessagingTemplate.convertAndSend("/recv/" + msg.getTo(), msg);
     }
 }

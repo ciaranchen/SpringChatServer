@@ -1,5 +1,6 @@
 package ChatServer.mapper;
 
+import ChatServer.model.ChatDoubles;
 import ChatServer.model.RecordsDouble;
 import org.apache.ibatis.annotations.*;
 
@@ -19,4 +20,10 @@ public interface RecordsDoubleMapper {
             @Result(property = "stamp", column = "stamp", javaType = Date.class)
     })
     List<RecordsDouble> queryRecord(@Param("cid") Long cid, @Param("offset") Long offset);
+
+    @Insert("INSERT INTO chat_doubles(user1, user2) VALUES(#{user1}, #{user2})")
+    void addFriend(ChatDoubles doubles);
+
+    @Select("select last_insert_rowid() from chat_doubles")
+    Long lastFriend();
 }

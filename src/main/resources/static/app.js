@@ -1,51 +1,30 @@
-var stompClient = null;
+var stomp;
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#greetings").html("");
+function init() {
+  output = document.getElementById("output");
 }
 
-function connect() {
-    var socket = new SockJS('/ws');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
-        });
+function send_echo() {
+  let wsUri = "ws://localhost:8080/ws";
+  writeToScreen("Connecting to " + wsUri);
+  stomp = Stomp.client(wsUri);
+  stomp.connect({username: 'ciaran'}, "qweasd", function (frame) {
+    console.log('Connected: ' + frame);
+    stomp.subscribe('/double/recv/6', function (g) {
+        writeToScreen("double recv: " + g.body);
     });
-}
-
-function disconnect() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
-    }
-    setConnected(false);
-    console.log("Disconnected");
-}
-
-function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
-}
-
-function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
-}
-
-$(function () {
-    $("form").on('submit', function (e) {
-        e.preventDefault();
+    stomp.subscribe('/room/recv/6', function(g) {
+        writeToScreen("room recv: " + g.body);
     });
-    $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendName(); });
-});
+    stomp.send("/double/send", {}, JSON.stringify({'channel': 3, 'sender': 1, 'to': 6, 'msg': "qwertasdfg"}));
+    stomp.send("/room/send", {}, JSON.stringify({'room': 1, 'user': 1, msg: 'something in the room'}));
+  });
+}
 
+function writeToScreen(message) {
+  var pre = document.createElement("p");
+  pre.style.wordWrap = "break-word";
+  pre.innerHTML = message;
+  output.appendChild(pre);
+}
+window.addEventListener("load", init, false);

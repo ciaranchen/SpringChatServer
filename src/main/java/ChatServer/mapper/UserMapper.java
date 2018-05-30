@@ -5,6 +5,7 @@ package ChatServer.mapper;
  */
 
 import ChatServer.Entity.ChatUsersEntity;
+import ChatServer.Entity.DoubleChannelEntity;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -42,14 +43,17 @@ public interface UserMapper {
     })
     java.lang.Long login(@Param("username") String username, @Param("password") String password);
 
-
-//    select t.id as channel_id, uid, username from (select id, user2 as uid from double_chats where user1 = 1 union select id, user1 as uid from double_chats where user2 = 1) as t left outer join chat_users as c on c.id = uid;
-    @Select("SELECT user2, username FROM double_chats LEFT OUTER JOIN chat_users as c2 ON c2.id = user2 where user1 = #{id}")
+    @Select("select t.id as cid, uid, username from (" +
+            "select id, user2 as uid from double_chats where user1 = #{id} " +
+            "union " +
+            "select id, user1 as uid from double_chats where user2 = #{id} " +
+            ") left outer join chat_users as c on c.id = uid")
     @Results({
-            @Result(property = "id", column = "user2"),
+            @Result(property = "cid", column = "cid"),
+            @Result(property = "uid", column = "uid"),
             @Result(property = "username", column = "username")
     })
-    List<ChatUsersEntity> queryRelationship(@Param("id") java.lang.Long id);
+    List<DoubleChannelEntity> queryRelationship(@Param("id") Long id);
 
     @Select("SELECT chat_rooms.id, name, owner FROM room_user LEFT OUTER JOIN chat_rooms ON room = chat_rooms.id WHERE user=#{id}")
     @Results({
@@ -57,5 +61,9 @@ public interface UserMapper {
             @Result(property = "name", column = "name"),
             @Result(property = "owner", column = "owner")
     })
-    List<Long> queryRoom(@Param("id") java.lang.Long id);
+    List<Long> queryRoom(@Param("id") Long id);
+
+    // 请注意：这里是有一个SQL注入问题的
+    @Select("SELECT id, username FROM chat_users WHERE username=\'%${username}%\'")
+    ChatUsersEntity searchName(@Param("username") String username);
 }

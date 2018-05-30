@@ -23,7 +23,9 @@ public class RoomChatHTTPController {
 
     @RequestMapping("/http/room/record")
     public List<RecordsRoom> queryRecord(
-            @RequestParam("room") Long room) {
+            @RequestParam("room") Long room
+    ) {
+        System.out.println(room);
         return recordsRoomMapper.queryRecord(room, 0L);
     }
 

@@ -67,9 +67,9 @@ insert into chat_rooms(name, owner) values ('Without Ciaran', 2);"""
     # double chat
     fprint("\n-- double chat (friend relationship)")
     temp = "insert into double_chats(user1, user2) values ({0}, {1});"
-    for i in range(5):
+    for i in range(4):
         fprint(temp.format(1, (i+1)*2))
-    for i in range(5):
+    for i in range(4):
         fprint(temp.format((i+1)*2, i*2+3))
 
     # fake chatting data

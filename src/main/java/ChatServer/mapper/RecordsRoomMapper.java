@@ -37,7 +37,7 @@ public interface RecordsRoomMapper {
     @Insert("INSERT INTO chat_rooms(name, owner) VALUES(#{name}, #{owner})")
     void createRoom(ChatRooms rooms);
 
-    @Select("select last_insert_rowid() from chat_rooms")
+    @Select("select last_insert_rowid() from chat_rooms LIMIT 1")
     Long lastRoom();
 
     @Insert("INSERT INTO room_user(room, user) VALUES(#{room}, #{user})")

@@ -25,7 +25,7 @@ public class DoubleChatHTTPController {
     public List<RecordsDouble> queryRecord(
             @RequestParam("cid") Long channel
     ) {
-        System.out.println(channel);
+//        System.out.println(channel);
         return recordsDoubleMapper.queryRecord(channel, 0L);
     }
 

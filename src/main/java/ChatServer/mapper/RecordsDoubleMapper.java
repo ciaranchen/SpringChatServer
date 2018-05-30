@@ -24,6 +24,6 @@ public interface RecordsDoubleMapper {
     @Insert("INSERT INTO chat_doubles(user1, user2) VALUES(#{user1}, #{user2})")
     void addFriend(ChatDoubles doubles);
 
-    @Select("select last_insert_rowid() from chat_doubles")
+    @Select("select last_insert_rowid() from chat_doubles LIMIT 1")
     Long lastFriend();
 }

@@ -52,6 +52,14 @@ public class RecordsRoom implements Serializable {
         this.msg = msg;
     }
 
+    public Date getStamp() {
+        return stamp;
+    }
+
+    public void setStamp(Date stamp) {
+        this.stamp = stamp;
+    }
+
     @Override
     public String toString() {
         return "RecordsRoom{" +

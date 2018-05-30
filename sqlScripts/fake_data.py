@@ -7,7 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 print('basedir: ' + basedir)
 object_file = os.path.join(basedir, 'fake_data.sql')
 print('write to: ' + object_file)
-fw = open(object_file, 'w')
+fw = open(object_file, 'w', encoding='utf-8')
 
 
 def fprint(*args, **kwargs):
@@ -16,24 +16,24 @@ def fprint(*args, **kwargs):
 
 def fake_double_record(filename, cid, ulist):
     print("reading: " + filename)
-    lines = open(filename).readlines()
+    lines = open(filename, encoding='utf-8').readlines()
     record_template = "insert into records_double(channel, sender, msg, stamp) values({0}, {1}, '{2}', {3});"
     for u, t, c in zip(lines[0::3], lines[1::3], lines[2::3]):
         uid = ulist.index(u[:-1]) + 1
-        stamp = 'datetime(\'' + t[:-1] + '\')'
+        stamp = 'strftime("%Y-%m-%d %H:%M:%S.%f", "' + t[:-1]  + '.0")'
         fprint(record_template.format(cid, uid, c[:-1], stamp))
 
 
 
 def fake_room_record(filename, ulist):
     print("reading: " + filename)
-    lines = open(filename).readlines()
+    lines = open(filename, encoding='utf-8').readlines()
     record_template = "insert into records_room(room, user, msg, stamp) values({0}, {1}, '{2}', {3});"
     for u, t, c in zip(lines[0::3], lines[1::3], lines[2::3]):
-        stamp = 'datetime(\'' + t[:-1] + '\')'
-        u_idx = ulist.index(u[:-1]) + 1
+        uid = ulist.index(u[:-1]) + 1
+        stamp = 'strftime("%Y-%m-%d %H:%M:%S.%f", "' + t[:-1]  + '.0")'
         room = 1
-        fprint(record_template.format(room, u_idx, c[:-1], stamp))
+        fprint(record_template.format(room, uid, c[:-1], stamp))
 
 
 

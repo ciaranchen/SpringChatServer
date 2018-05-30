@@ -3,7 +3,7 @@ package ChatServer.model;
 import java.io.Serializable;
 
 public class ChatDoubles implements Serializable {
-    private java.lang.Long id;
+    private Long id;
     private Long user1;
     private Long user2;
 

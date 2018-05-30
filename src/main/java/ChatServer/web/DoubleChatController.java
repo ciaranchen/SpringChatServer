@@ -10,30 +10,31 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 @AutoConfigureMybatis
 public class DoubleChatController {
     @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    private RecordsDoubleMapper recordsDoubleMapper;
 
     @Autowired
-    private RecordsDoubleMapper recordsDoubleMapper;
+    private SimpMessagingTemplate simpMessagingTemplate;
 
 //    @Autowired private ProfanityChecker profanityFilter;
 //
 //    @Autowired private SessionProfanity profanity;
 
-    @MessageMapping("/send")
+    @MessageMapping("/double/send")
+    @Transactional(propagation = Propagation.REQUIRED)
     public void doubleChatMessage(DoubleChatMsg msg) throws Exception {
         System.out.println(msg);
-        // todo: save this msg to database;
-        // todo: save this msg to database;
-//        SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-        RecordsDouble recordsDouble = new RecordsDouble();
+        // insert record into database
+        RecordsDouble recordsDouble = new RecordsDouble(
+                msg.getChannel(), msg.getSender(), msg.getMsg());
+        System.out.println(recordsDouble);
         recordsDoubleMapper.insertRecord(recordsDouble);
-
-
-        simpMessagingTemplate.convertAndSend("/recv/" + msg.getTo(), msg);
+        simpMessagingTemplate.convertAndSend("/double/recv/" + msg.getTo(), msg);
     }
 }

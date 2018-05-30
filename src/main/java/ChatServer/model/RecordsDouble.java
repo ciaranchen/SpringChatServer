@@ -5,18 +5,19 @@ import java.util.Date;
 
 public class RecordsDouble implements Serializable {
     private Long id;
-    private ChatDoubles channel;
+    private Long channel;
+    private Long sender;
     private String msg;
     private Date stamp;
 
     public RecordsDouble() {
     }
 
-    public RecordsDouble(ChatDoubles channel, String msg) {
+    public RecordsDouble(Long channel, Long sender, String msg) {
         this.channel = channel;
+        this.sender = sender;
         this.msg = msg;
         this.stamp = new Date();
-        System.out.println(stamp);
     }
 
     public Long getId() {
@@ -27,12 +28,20 @@ public class RecordsDouble implements Serializable {
         this.id = id;
     }
 
-    public ChatDoubles getChannel() {
+    public Long getChannel() {
         return channel;
     }
 
-    public void setChannel(ChatDoubles channel) {
+    public void setChannel(Long channel) {
         this.channel = channel;
+    }
+
+    public Long getSender() {
+        return sender;
+    }
+
+    public void setSender(Long sender) {
+        this.sender = sender;
     }
 
     public String getMsg() {
@@ -49,5 +58,16 @@ public class RecordsDouble implements Serializable {
 
     public void setStamp(Date stamp) {
         this.stamp = stamp;
+    }
+
+    @Override
+    public String toString() {
+        return "RecordsDouble{" +
+                "id=" + id +
+                ", channel=" + channel +
+                ", sender=" + sender +
+                ", msg='" + msg + '\'' +
+                ", stamp=" + stamp +
+                '}';
     }
 }

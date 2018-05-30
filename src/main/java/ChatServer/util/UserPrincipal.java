@@ -12,7 +12,7 @@ public class UserPrincipal implements Principal, Cloneable, Serializable {
         this.username = username;
     }
 
-    //【2】getContent() 是 Principal 接口，是主要使用的方法
+    //【2】getMsg() 是 Principal 接口，是主要使用的方法
     @Override
     public String getName() {
         return this.username;

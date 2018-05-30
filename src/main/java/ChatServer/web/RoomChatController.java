@@ -2,7 +2,9 @@ package ChatServer.web;
 
 
 import ChatServer.mapper.RecordsDoubleMapper;
+import ChatServer.mapper.RecordsRoomMapper;
 import ChatServer.message.RoomChatMsg;
+import ChatServer.model.RecordsRoom;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,16 +18,14 @@ public class RoomChatController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    private RecordsDoubleMapper recordsDoubleMapper;
-
-//    @Autowired private ProfanityChecker profanityFilter;
-//
-//    @Autowired private SessionProfanity profanity;
+    private RecordsRoomMapper recordsRoomMapper;
 
     @MessageMapping("/room/send")
     public void roomChatMessage(RoomChatMsg msg) throws Exception {
         System.out.println(msg);
-        // todo: save this msg to database;
+        RecordsRoom recordsRoom = new RecordsRoom(msg.getRoom(), msg.getUser(), msg.getMsg());
+        System.out.println(recordsRoom);
+        recordsRoomMapper.insertRecord(recordsRoom);
         simpMessagingTemplate.convertAndSend("/room/recv/" + msg.getRoom(), msg);
     }
 }

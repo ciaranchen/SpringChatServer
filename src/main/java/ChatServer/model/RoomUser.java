@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class RoomUser implements Serializable {
     private java.lang.Long id;
-    private ChatRooms room;
-    private Long user;
+    private Long room;
+    private java.lang.Long user;
 
     public RoomUser() {
     }
 
-    public RoomUser(ChatRooms room, Long user) {
+    public RoomUser(Long room, java.lang.Long user) {
         this.room = room;
         this.user = user;
     }
@@ -23,19 +23,19 @@ public class RoomUser implements Serializable {
         this.id = id;
     }
 
-    public ChatRooms getRoom() {
+    public Long getRoom() {
         return room;
     }
 
-    public void setRoom(ChatRooms room) {
+    public void setRoom(Long room) {
         this.room = room;
     }
 
-    public Long getUser() {
+    public java.lang.Long getUser() {
         return user;
     }
 
-    public void setUser(Long user) {
+    public void setUser(java.lang.Long user) {
         this.user = user;
     }
 }

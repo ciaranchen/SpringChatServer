@@ -1,33 +1,49 @@
 package ChatServer.message;
 
 public class DoubleChatMsg {
-    private Long from;
+    private Long channel;
+    private Long sender;
     private Long to;
-    private String content;
-
-    public DoubleChatMsg(Long from, Long to, String content) {
-        this.from = from;
-        this.content = content;
-        this.to = to;
-    }
+    private String msg;
 
     public DoubleChatMsg() {
     }
 
-    public Long getFrom() {
-        return from;
+    public DoubleChatMsg(Long channel, Long sender, Long to, String msg) {
+        this.channel = channel;
+        this.sender = sender;
+        this.to = to;
+        this.msg = msg;
     }
 
-    public void setFrom(Long from) {
-        this.from = from;
+    public DoubleChatMsg(Long channel, Long sender, String msg) {
+        this.channel = channel;
+        this.sender = sender;
+        this.msg = msg;
     }
 
-    public String getContent() {
-        return content;
+    public Long getChannel() {
+        return channel;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setChannel(Long channel) {
+        this.channel = channel;
+    }
+
+    public Long getSender() {
+        return sender;
+    }
+
+    public void setSender(Long sender) {
+        this.sender = sender;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public Long getTo() {
@@ -36,14 +52,5 @@ public class DoubleChatMsg {
 
     public void setTo(Long to) {
         this.to = to;
-    }
-
-    @Override
-    public String toString() {
-        return "DoubleChatMsg{" +
-                "from=" + from +
-                ", to=" + to +
-                ", content='" + content + '\'' +
-                '}';
     }
 }

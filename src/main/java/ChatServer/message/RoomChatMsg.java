@@ -3,9 +3,15 @@ package ChatServer.message;
 public class RoomChatMsg {
     private Long room;
     private Long user;
-    private String content;
+    private String msg;
 
     public RoomChatMsg() {
+    }
+
+    public RoomChatMsg(Long room, Long user, String msg) {
+        this.room = room;
+        this.user = user;
+        this.msg = msg;
     }
 
     public Long getRoom() {
@@ -24,12 +30,12 @@ public class RoomChatMsg {
         this.user = user;
     }
 
-    public String getContent() {
-        return content;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     @Override
@@ -37,7 +43,7 @@ public class RoomChatMsg {
         return "RoomChatMsg{" +
                 "room=" + room +
                 ", user=" + user +
-                ", content='" + content + '\'' +
+                ", msg='" + msg + '\'' +
                 '}';
     }
 }

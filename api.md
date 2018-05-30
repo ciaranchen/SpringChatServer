@@ -1,3 +1,19 @@
+## WebSocket相关
+
+### WebSocket连接
+
+#### URL
+
+> [ws://localhost:8080/ws](ws://localhost:8080/ws)
+
+#### JS 示例
+
+``` JavaScript
+let wsUri = "ws://localhost:8080/ws";
+stomp = Stomp.client(wsUri);
+stomp.connect(headers, passcode, callback);
+```
+
 ## 用户相关API
 
 ### 1. 用户验证
@@ -8,7 +24,7 @@
 
 #### URL
 
-> [/http/user/login](127.0.0.1:8080/http/user/login)
+> [http://127.0.0.1:8080/http/user/login](http://127.0.0.1:8080/http/user/login)
 
 #### HTTP请求方式
 
@@ -39,7 +55,7 @@
 
 #### URL
 
-> [http://127.0.0.1:8080/http/user/relationship](127.0.0.1:8080/http/user/relationship)
+> [http://127.0.0.1:8080/http/user/relationship](http://127.0.0.1:8080/http/user/relationship)
 
 #### HTTP请求方式
 
@@ -75,7 +91,7 @@
 
 #### URL
 
-> [http://127.0.0.1:8080/http/user/room](127.0.0.1:8080/http/user/room)
+> [http://127.0.0.1:8080/http/user/room](http://127.0.0.1:8080/http/user/room)
 
 #### HTTP请求方式
 
@@ -112,9 +128,9 @@
 
 > 用户发送消息
 
-#### WebSocket地址
+#### URL
 
-> [](127.0.0.1:8080/index.php)
+> [ws://127.0.0.1:8080/ws/double/send](ws://127.0.0.1:8080/ws/double/send)
 
 #### 支持格式
 
@@ -124,19 +140,17 @@
 
 |参数|必选|类型|说明|
 |:----- |:-------|:-----|----- |
-|From    |ture |long  | 消息发送者的user_id |
-|To      |true |long  | 消息接收者的user_id |
-|Content |ture |string| 发送的消息 |
+|channel  |true |Long  | 私聊的channel的channel_id  |
+|sender   |true |Long  | 消息发送者的user_id        |
+|to       |true |Long  | 消息接收者的user_id        |
+|msg      |true |string| 发送的消息                 |
 
 #### JS示例
 
-> 地址：[http://127.0.0.1:8080/index.php?name=可口可乐&type=1](http://127.0.0.1:8080/index.php?name=可口可乐&type=1)
-
-    {
-        "state": 0,
-        "company": "可口可乐",
-        "category": "饮料"
-    }
+``` JavaScript
+// after connected.
+stomp.send("/double/send", {}, JSON.stringify({'channel': 3, 'sender': 1, 'to': 6, 'msg': "qwertasdfg"}));
+```
 
 ### 2. 接受私聊消息
 
@@ -146,31 +160,105 @@
 
 #### WebSocket地址
 
-> [](127.0.0.1:8080/index.php)
+> [ws://127.0.0.1:8080/ws/double/send/{username}](ws://127.0.0.1:8080/ws/double/send/{username})
 
-#### 支持格式
+#### 返回参数
 
-> STOMP
+|参数|类型|说明|
+|:----- |:-----|----- |
+|channel    |long  | 消息发送者的user_id |
+|sender     |long  | 消息接收者的user_id |
+|msg        |string| 发送的消息 |
+
+#### JS示例
+
+``` JavaScript
+// after connected
+stomp.subscribe('/double/recv/6', function (g) {
+	// do something with g.body
+});
+```
+
+### 3. 查询记录
+
+#### 接口功能
+
+> 查询用户的聊天记录
+
+#### URL
+
+> [http://127.0.0.1:8080/http/double/record](http://127.0.0.1:8080/http/double/record)
+
+#### HTTP请求方式
+
+> GET
 
 #### 请求参数
 
 |参数|必选|类型|说明|
 |:----- |:-------|:-----|----- |
-|From    |ture |long  | 消息发送者的user_id |
-|To      |true |long  | 消息接收者的user_id |
-|Content |ture |string| 发送的消息 |
+|user |true |Long | 用户私聊的 channel |
 
-#### JS示例
+#### 返回字段
 
-> 地址：[http://127.0.0.1:8080/index.php?name=可口可乐&type=1](http://127.0.0.1:8080/index.php?name=可口可乐&type=1)
+用JSON标识的列表，表中的每个元素具有以下属性。
 
-    {
-        "state": 0,
-        "company": "可口可乐",
-        "category": "饮料"
-    }
+|属性名|类型|说明|
+|:----- |:-------|----- |
+|id       |Long | 该记录的id |
+|channel  |Long | 该记录的channel id |
+|sender   |Long | 该记录的发送者的user id |
+|msg      |String | 这条消息的內容 |
+|stamp    |Date | 这条消息的发送时间 |
 
+> 列表的长度最长为20
 
+#### 接口示例
+
+> 地址：[http://127.0.0.1:8080/http/double/record?cid=3](http://127.0.0.1:8080/http/double/record?cid=3)
+
+    [{"id":10,"channel":3,"sender":6,"msg":"哦","stamp":"2018-05-04T06:20:15.015+0000"},{"id":9,"channel":3,"sender":1,"msg":"2333333","stamp":"2018-05-04T06:20:14.014+0000"},{"id":8,"channel":3,"sender":1,"msg":"我是HR","stamp":"2018-05-04T06:20:12.012+0000"},{"id":7,"channel":3,"sender":1,"msg":"。。。","stamp":"2018-05-04T06:20:06.006+0000"},{"id":6,"channel":3,"sender":6,"msg":"我是pm","stamp":"2018-05-04T06:19:57.057+0000"},{"id":5,"channel":3,"sender":6,"msg":"我不管","stamp":"2018-05-04T06:19:54.054+0000"},{"id":4,"channel":3,"sender":6,"msg":"哦","stamp":"2018-05-04T06:19:51.051+0000"},{"id":3,"channel":3,"sender":1,"msg":"不是妹子不要","stamp":"2018-05-04T06:19:25.025+0000"},{"id":2,"channel":3,"sender":1,"msg":"。。。","stamp":"2018-05-04T06:19:20.020+0000"},{"id":1,"channel":3,"sender":6,"msg":"咱们现在是不是还空一个位置？","stamp":"2018-05-04T06:19:13.013+0000"}]
+
+### 4. 偏移的查询记录
+
+#### 接口功能
+
+> 带偏移地查询用户的聊天记录（用于加载不同时期的聊天记录）
+
+#### URL
+
+> [http://127.0.0.1:8080/http/double/record_offset](http://127.0.0.1:8080/http/double/record_offset)
+
+#### HTTP请求方式
+
+> GET
+
+#### 请求参数
+
+|参数|必选|类型|说明|
+|:----- |:-------|:-----|----- |
+|user   |true |Long | 用户私聊的 channel |
+|offset |true |Long | 偏移聊天记录距离最新的聊天记录的条数 |
+
+#### 返回字段
+
+用JSON标识的列表，表中的每个元素具有以下属性
+
+|属性名|类型|说明|
+|:----- |:-------|----- |
+|id       |Long | 该记录的id |
+|channel  |Long | 该记录的channel id |
+|sender   |Long | 该记录的发送者的user id |
+|msg      |String | 这条消息的內容 |
+|stamp    |Date | 这条消息的发送时间 |
+
+> 列表的长度最长为20
+
+#### 接口示例
+
+> 地址：[http://127.0.0.1:8080/http/double/record_offset?cid=3&offset=5](http://127.0.0.1:8080/http/double/record_offset?cid=3&offset=5)
+
+    [{"id":10,"channel":3,"sender":6,"msg":"哦","stamp":"2018-05-04T06:20:15.015+0000"},{"id":9,"channel":3,"sender":1,"msg":"2333333","stamp":"2018-05-04T06:20:14.014+0000"},{"id":8,"channel":3,"sender":1,"msg":"我是HR","stamp":"2018-05-04T06:20:12.012+0000"},{"id":7,"channel":3,"sender":1,"msg":"。。。","stamp":"2018-05-04T06:20:06.006+0000"},{"id":6,"channel":3,"sender":6,"msg":"我是pm","stamp":"2018-05-04T06:19:57.057+0000"},{"id":5,"channel":3,"sender":6,"msg":"我不管","stamp":"2018-05-04T06:19:54.054+0000"},{"id":4,"channel":3,"sender":6,"msg":"哦","stamp":"2018-05-04T06:19:51.051+0000"},{"id":3,"channel":3,"sender":1,"msg":"不是妹子不要","stamp":"2018-05-04T06:19:25.025+0000"},{"id":2,"channel":3,"sender":1,"msg":"。。。","stamp":"2018-05-04T06:19:20.020+0000"},{"id":1,"channel":3,"sender":6,"msg":"咱们现在是不是还空一个位置？","stamp":"2018-05-04T06:19:13.013+0000"}]
 
 ## 群聊相关API
 

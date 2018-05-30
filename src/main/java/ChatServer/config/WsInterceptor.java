@@ -26,7 +26,7 @@ public class WsInterceptor extends HttpSessionHandshakeInterceptor implements Ha
      * 根据token认证授权
      */
     private Principal authenticate(String token){
-        //用户信息需继承 Principal 并实现 getContent() 方法，返回全局唯一值
+        //用户信息需继承 Principal 并实现 getMsg() 方法，返回全局唯一值
 //        String str = Arrays.toString(Base64.getDecoder().decode(token));
         String str = token;
         String[] msgs = str.split("#");

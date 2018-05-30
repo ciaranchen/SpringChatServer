@@ -8,7 +8,7 @@ spring:
 
 mybatis:
   typeAliasesPackage: org.spring.springboot.domain
-  mapperLocations: classpath:mapper/*.xml
+  mapperLocations: classpath:mapper/*
 
 log4j:
   logger:

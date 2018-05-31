@@ -13,6 +13,7 @@ insert into chat_users(username, password, setting) values ('user8', 'pass8', 1)
 insert into chat_users(username, password, setting) values ('user9', 'pass9', 1);
 insert into chat_users(username, password, setting) values ('user10', 'pass10', 1);
 insert into chat_users(username, password, setting) values ('user11', 'pass11', 1);
+update chat_users set avatar='ciaran.jpg' where username='ciaran';
 
 -- chat rooms
 insert into chat_rooms(name, owner) values ("Ciaran's room", 1);
@@ -46,12 +47,10 @@ insert into double_chats(user1, user2) values (1, 2);
 insert into double_chats(user1, user2) values (1, 4);
 insert into double_chats(user1, user2) values (1, 6);
 insert into double_chats(user1, user2) values (1, 8);
-insert into double_chats(user1, user2) values (1, 10);
 insert into double_chats(user1, user2) values (2, 3);
 insert into double_chats(user1, user2) values (4, 5);
 insert into double_chats(user1, user2) values (6, 7);
 insert into double_chats(user1, user2) values (8, 9);
-insert into double_chats(user1, user2) values (10, 11);
 
 -- room chat record
 insert into records_room(room, user, msg, stamp) values(1, 2, '请客请客', strftime("%Y-%m-%d %H:%M:%S.%f", "2018-04-27 20:21:29.0"));

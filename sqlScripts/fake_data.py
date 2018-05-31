@@ -48,6 +48,9 @@ if __name__ == "__main__":
     for u, p in zip(usr_list, psw_list):
         fprint(temp.format(u, p))
 
+    temp = "update chat_users set avatar='ciaran.jpg' where username='ciaran';"
+    fprint(temp)
+
     # chat room
     s = """\n-- chat rooms
 insert into chat_rooms(name, owner) values ("Ciaran's room", 1);

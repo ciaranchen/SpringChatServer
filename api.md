@@ -105,20 +105,192 @@ stomp.connect(headers, passcode, callback);
 
 #### 返回字段
 
-返回所在聊天室的`user_id`和`username`
 用JSON标识的列表，表中的每个元素具有以下属性
 
 |属性名|类型|说明|
 |:----- |:-------|----- |
-|id |Long | 该用户的user_id |
-|username |String | 该用户的用户名 |
+|id       |Long   | 聊天室的id     |
+|name     |String | 聊天室的名称    |
+|owner    |Long   | 聊天室主人的id     |
 
 #### 接口示例
 
-> 地址：[http://127.0.0.1:8080/http/user/relationship?user=1](http://127.0.0.1:8080/http/user/relationship?user=1)
+> 地址：[http://127.0.0.1:8080/http/user/room?user=1](http://127.0.0.1:8080/http/user/room?user=1)
 
-    [{"id":2,"username":"user2"},{"id":4,"username":"user4"},{"id":6,"username":"user6"},{"id":8,"username":"user8"},{"id":10,"username":"user10"}]
+    [{"id":1,"name":"Ciaran's room","owner":1},{"id":3,"name":"chatRoom","owner":1}]
 
+### 4. 获取用户设置
+
+#### 接口功能
+
+> 获得用户的设置
+
+#### URL
+
+> [http://127.0.0.1:8080/http/user/setting](http://127.0.0.1:8080/http/user/setting)
+
+#### HTTP请求方式
+
+> GET
+
+#### 请求参数
+
+|参数|必选|类型|说明|
+|:----- |:-------|:-----|----- |
+|user |true |Long | 用户的 user_id |
+
+#### 返回字段
+
+返回用户设置的属性
+
+#### 接口示例
+
+> 地址：[http://127.0.0.1:8080/http/user/setting?user=1](http://127.0.0.1:8080/http/user/setting?user=1)
+
+    1
+
+### 5. 查找用户
+
+#### 接口功能
+
+> 通过用户名查找用户的信息
+
+#### URL
+
+> [http://127.0.0.1:8080/http/user/searchUser](http://127.0.0.1:8080/http/user/searchUser)
+
+#### HTTP请求方式
+
+> GET
+
+#### 请求参数
+
+|参数|必选|类型|说明|
+|:----- |:-------|:-----|----- |
+|name |true |String | 用户名字（或名字的一部分） |
+
+#### 返回字段
+
+|属性名|类型|说明|
+|:----- |:-------|----- |
+|id       |Long   | 该用户的user_id |
+|username |String | 该用户的用户名   |
+
+#### 接口示例
+
+> 地址：[http://127.0.0.1:8080/http/user/searchUser?name=user](http://127.0.0.1:8080/http/user/setting?)
+
+    [{"id":10,"username":"user10"},{"id":11,"username":"user11"},{"id":2,"username":"user2"},{"id":3,"username":"user3"},{"id":4,"username":"user4"},{"id":5,"username":"user5"},{"id":6,"username":"user6"},{"id":7,"username":"user7"},{"id":8,"username":"user8"},{"id":9,"username":"user9"}]
+
+### 5. 查找聊天室
+
+#### 接口功能
+
+> 通过名字查找聊天室
+
+#### URL
+
+> [http://127.0.0.1:8080/http/user/searchRoom](http://127.0.0.1:8080/http/user/searchRoom)
+
+#### HTTP请求方式
+
+> GET
+
+#### 请求参数
+
+|参数|必选|类型|说明|
+|:----- |:-------|:-----|----- |
+|name |true |String | 名字（或名字的一部分） |
+
+#### 返回字段
+
+|属性名|类型|说明|
+|:----- |:-------|----- |
+|id       |Long   | 聊天室的id     |
+|name     |String | 聊天室的名称    |
+|owner    |Long   | 聊天室主人的id     |
+
+
+#### 接口示例
+
+> 地址：[http://127.0.0.1:8080/http/user/searchRoom?name=room](http://127.0.0.1:8080/http/user/searchRoom?name=room)
+
+    [{"id":1,"name":"Ciaran's room","owner":1},{"id":3,"name":"chatRoom","owner":1}]
+
+### 6. 上传头像
+
+#### 接口功能
+
+> 为用户上传头像
+
+#### URL
+
+> [http://127.0.0.1:8080/http/user/upload/{id}](http://127.0.0.1:8080/http/user/upload/{id})
+
+#### HTTP请求方式
+
+> POST
+
+#### 请求参数
+
+URL 参数
+
+|参数|必选|类型|说明|
+|:----- |:-------|:-----|----- |
+|id |true |Long | 用户的id |
+
+POST 文件参数
+
+|参数|必选|类型|说明|
+|:----- |:-------|:-----|----- |
+|file |true |File | 用户上传的头像文件 |
+
+#### 返回字段
+
+成功返回0
+
+#### 接口示例
+
+请参照此处：
+[http://127.0.0.1/upload.html](http://127.0.0.1/upload.html)
+
+### 7. 获取用户头像
+
+#### 接口功能
+
+> 获得用户上传的头像
+
+注：最初会为用户分配默认头像，若未上传则获取会得到默认头像。
+
+#### URL
+
+> [http://127.0.0.1:8080/http/user/avatar/{id}](http://127.0.0.1:8080/http/user/avatar/{id})
+
+#### HTTP请求方式
+
+> POST
+
+#### 请求参数
+
+URL 参数
+
+|参数|必选|类型|说明|
+|:----- |:-------|:-----|----- |
+|id |true |Long | 用户的id |
+
+#### 返回字段
+
+直接获得用户头像的文件
+
+> 若在浏览器访问会直接进行下载
+
+注：默认头像请访问id为2以上的假数据用户
+
+#### 接口示例
+
+> [http://127.0.0.1:8080/http/user/avatar/1](http://127.0.0.1:8080/http/user/avatar/1)
+
+    若在浏览器访问会直接进行下载
 
 ## 私聊相关API
 

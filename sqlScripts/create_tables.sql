@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS chat_users (
     id          INTEGER         PRIMARY KEY AUTOINCREMENT,
     username    VARCHAR(150)    NOT NULL unique,
     password    BOOLEAN         NOT NULL,
-    avatar      VARCHAR(70),
+    avatar      VARCHAR(70) DEFAULT 'default.png',
     setting     INTEGER         NOT NULL,
     FOREIGN KEY(setting) REFERENCES chat_settings
 );

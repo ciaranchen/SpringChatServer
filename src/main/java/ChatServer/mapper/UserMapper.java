@@ -6,42 +6,17 @@ package ChatServer.mapper;
 
 import ChatServer.Entity.ChatUsersEntity;
 import ChatServer.Entity.DoubleChannelEntity;
+import ChatServer.model.ChatRooms;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 public interface UserMapper {
-//    @Select("SELECT * FROM chat_users")
-//    @Results({
-//            @Result(property = "username",  column = "username"),
-//            @Result(property = "passwd", column = "passwd"),
-//            @Result(property = "id", column = "id"),
-//            @Result(property = "setting", column = "setting")
-//    })
-//    List<Long> getAll();
-
-//    @Select("SELECT * FROM users WHERE id = #{id}")
-//    @Results({
-//            @Result(property = "username",  column = "username"),
-//            @Result(property = "passwd", column = "passwd"),
-//            @Result(property = "setting", column = "setting")
-//    })
-//    Long getOne(Long id);
-//
-//    @Insert("INSERT INTO users(userName, passWord, setting) VALUES(#{username}, #{passWord}, #{setting})")
-//    void insert(Long user);
-//
-//    @Update("UPDATE users SET userName=#{username},nick_name=#{nickName} WHERE id =#{id}")
-//    void update(Long user);
-//
-//    @Delete("DELETE FROM users WHERE id =#{id}")
-//    void delete(Long id);
-
     @Select("SELECT id FROM chat_users WHERE username=#{username} and password=#{password}")
     @Results({
             @Result(property = "id", column = "id")
     })
-    java.lang.Long login(@Param("username") String username, @Param("password") String password);
+    Long login(@Param("username") String username, @Param("password") String password);
 
     @Select("select t.id as cid, uid, username from (" +
             "select id, user2 as uid from double_chats where user1 = #{id} " +
@@ -61,9 +36,28 @@ public interface UserMapper {
             @Result(property = "name", column = "name"),
             @Result(property = "owner", column = "owner")
     })
-    List<Long> queryRoom(@Param("id") Long id);
+    List<ChatRooms> queryRoom(@Param("id") Long id);
 
     // 请注意：这里是有一个SQL注入问题的
-    @Select("SELECT id, username FROM chat_users WHERE username=\'%${username}%\'")
-    ChatUsersEntity searchName(@Param("username") String username);
+    @Select("SELECT id, username FROM chat_users WHERE username LIKE \'%${username}%\'")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "username", column = "username")
+    })
+    List<ChatUsersEntity> searchName(@Param("username") String username);
+
+    // 请注意：这里是有一个SQL注入问题的
+    @Select("SELECT * FROM chat_rooms WHERE name LIKE \'%${username}%\'")
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "owner", column = "owner")
+    })
+    List<ChatRooms> searchRoom(@Param("username") String username);
+
+    @Select("SELECT avatar FROM chat_users WHERE id=#{id}")
+    String getAvatar(@Param("id") Long id);
+
+    @Update("UPDATE chat_users SET avatar=#{filename} WHERE id=#{id}")
+    void updateAvatar(@Param("id") Long id, @Param("filename") String filename);
 }
